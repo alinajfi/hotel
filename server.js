@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("./db");
+reuire("dotenv").config();
 const personModel = require("./models/person.js");
 const menuModel = require("./models/Menu.js");
 const bodyParser = require("body-parser");
