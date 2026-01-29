@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("./db");
-reuire("dotenv").config();
+require("dotenv").config();
 const personModel = require("./models/person.js");
 const menuModel = require("./models/Menu.js");
 const bodyParser = require("body-parser");
@@ -17,8 +17,10 @@ app.use("/person", personRoutes);
 const menuRoutes = require("./routes/menu_routes");
 app.use("/menu", menuRoutes);
 
-app.listen(3000, async () => {
-  console.log("Server is running on http://localhost:3000");
+const port = process.env.PORT || 3000;
+
+app.listen(port, async () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
 
 //we learned routes in express and modularizing the

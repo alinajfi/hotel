@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-reuire("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
-const mongoURl =
-  process.env.MONGODB_URI || "mongodb://localhost:27017/mydatabase";
+const mongoURl = process.env.mongoURlLive;
 
 //dont add @ in password
 
-const mongoURlLive = process.env.MONGODB_URI_LIVE || mongoURl;
+//const mongoURlLive = process.env.MONGODB_URI_LIVE || mongoURl;
 
 export async function connectToDatabase() {
   try {
