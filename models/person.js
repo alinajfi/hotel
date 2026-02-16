@@ -1,23 +1,30 @@
-const mongoose = require('mongoose');
-
+const mongoose = require("mongoose");
 
 const personSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    age: {
-        type: Number,
-    },
-    email: {
-        type: String,
-        unique: true,   
-    },
-    work: {
-        type:String,
-        enum: ["chef", "waiter", "manager"],
-        required: true,
-    }
+  name: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: Number,
+  },
+  email: {
+    type: String,
+    unique: true,
+  },
+  work: {
+    type: String,
+    enum: ["chef", "waiter", "manager"],
+    required: true,
+  },
+  username: {
+    required: true,
+    type: String,
+  },
+  pasword: {
+    required: true,
+    type: String,
+  },
 });
 
 const personModel = mongoose.model("Person", personSchema);
