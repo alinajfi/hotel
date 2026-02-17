@@ -18,14 +18,17 @@ const logrequest = (req, res, next) => {
   next();
 };
 
+app.use(passport.initialize());
+
 passport.use(
-  new localStrategy(async (UserName, password, done) => {
+  new localStrategy(async (userName, passwordFromRequest, done) => {
     try {
-      console.log(`Recevided cred ${UserName} ${password}`);
-      const user = await personModel.findOne({ userName: UserName });
+      console.log(`Recevided cred ${userName} ${passwordFromRequest}`);
+      const user = await personModel.findOne({ username: userName });
       if (!user) return done(null, false, { message: "Incorrect user name" });
 
-      const isPasswordMatch = user.pasword === password ? true : false;
+      const isPasswordMatch =
+        user.password === passwordFromRequest ? true : false;
 
       if (isPasswordMatch) {
         return done(null, user);
@@ -33,12 +36,11 @@ passport.use(
         return done(null, false, { message: "password dont match" });
       }
     } catch (error) {
+      console.log(error);
       return done(`error in logingin insuer ${error}`);
     }
   }),
 );
-
-app.use(passport.initialize());
 
 //app.use(logrequest);
 
@@ -49,6 +51,7 @@ app.post(
     try {
       res.send("Welcome to the Restaurant Management API");
     } catch (error) {
+      console.log(error);
       res.send(error);
     }
   },
@@ -64,6 +67,13 @@ const port = process.env.PORT || 3000;
 
 app.listen(port, async () => {
   console.log(`Server is running on http://localhost:${port}`);
+});
+
+app.use((err, req, res, next) => {
+  console.error("🔥 Global error handler:");
+  console.error("Message:", err.message);
+  console.error("Stack:", err.stack);
+  res.status(500).send("Something broke!");
 });
 
 //we learned routes in express and modularizing the
